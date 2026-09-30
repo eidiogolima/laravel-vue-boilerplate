@@ -2,7 +2,7 @@
 set -e
 
 echo "──────────────────────────────────────────"
-echo "  Zacash — iniciando container"
+echo "  Ranklio — iniciando container"
 echo "──────────────────────────────────────────"
 
 # ── Validação de variáveis obrigatórias ───────────────────────────────────────
