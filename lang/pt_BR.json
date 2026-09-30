@@ -427,5 +427,7 @@
     "Orders": "Pedidos",
     "Top customers": "Principais clientes",
     "Highest paid revenue in the period.": "Maior receita paga no período.",
-    ":count paid orders": ":count pedidos pagos"
+    ":count paid orders": ":count pedidos pagos",
+    "Continue with Google": "Continuar com o Google",
+    "Or continue with": "Ou continue com"
 }

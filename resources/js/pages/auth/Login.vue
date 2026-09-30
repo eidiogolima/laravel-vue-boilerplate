@@ -13,6 +13,10 @@ import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 import PasskeyVerify from '@/components/PasskeyVerify.vue';
+import GoogleSignInButton from '@/components/GoogleSignInButton.vue';
+import AuthDivider from '@/components/AuthDivider.vue';
+import { Passkeys } from '@laravel/passkeys';
+import { onMounted, ref } from 'vue';
 
 defineOptions({
     layout: {
@@ -24,7 +28,14 @@ defineOptions({
 defineProps<{
     status?: string;
     canResetPassword: boolean;
+    canLogInWithGoogle: boolean;
 }>();
+
+const arePasskeysSupported = ref(false);
+
+onMounted(() => {
+    arePasskeysSupported.value = Passkeys.isSupported();
+});
 </script>
 
 <template>
@@ -36,8 +47,6 @@ defineProps<{
     >
         {{ status }}
     </div>
-
-    <PasskeyVerify />
 
     <Form
         v-bind="store.form()"
@@ -101,6 +110,17 @@ defineProps<{
                 <Spinner v-if="processing" />
                 {{ trans('Log in') }}
             </Button>
+        </div>
+
+        <div
+            v-if="canLogInWithGoogle || arePasskeysSupported"
+            class="flex flex-col gap-4"
+        >
+            <AuthDivider :label="trans('Or continue with')" />
+            <div class="flex flex-col gap-2">
+                <GoogleSignInButton v-if="canLogInWithGoogle" />
+                <PasskeyVerify :show-divider="false" />
+            </div>
         </div>
 
         <div class="text-center text-sm text-muted-foreground">

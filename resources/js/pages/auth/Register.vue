@@ -10,9 +10,12 @@ import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
+import GoogleSignInButton from '@/components/GoogleSignInButton.vue';
+import AuthDivider from '@/components/AuthDivider.vue';
 
 defineProps<{
     passwordRules: string;
+    canLogInWithGoogle: boolean;
 }>();
 
 defineOptions({
@@ -102,6 +105,11 @@ defineOptions({
                 <Spinner v-if="processing" />
                 {{ trans('Create account') }}
             </Button>
+        </div>
+
+        <div v-if="canLogInWithGoogle" class="flex flex-col gap-4">
+            <AuthDivider :label="trans('Or continue with')" />
+            <GoogleSignInButton />
         </div>
 
         <div class="text-center text-sm text-muted-foreground">
