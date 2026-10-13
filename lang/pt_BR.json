@@ -472,5 +472,7 @@
     "System alerts and updates about your account.": "Alertas do sistema e novidades sobre a sua conta.",
     "All": "Todas",
     "Unread": "Não lidas",
-    "Open": "Abrir"
+    "Open": "Abrir",
+    "Automatic": "Automático",
+    "Choose how the interface looks. Automatic follows your device settings.": "Escolha a aparência da interface. Automático acompanha as configurações do seu dispositivo."
 }

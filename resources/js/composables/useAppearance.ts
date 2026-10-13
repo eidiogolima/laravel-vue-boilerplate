@@ -14,7 +14,7 @@ export type AppearanceOption = {
 export const appearanceOptions: AppearanceOption[] = [
     { value: 'light', icon: Sun, label: 'Light' },
     { value: 'dark', icon: Moon, label: 'Dark' },
-    { value: 'system', icon: Monitor, label: 'System' },
+    { value: 'system', icon: Monitor, label: 'Automatic' },
 ];
 
 export type UseAppearanceReturn = {
@@ -41,6 +41,19 @@ export function updateTheme(value: Appearance): void {
     } else {
         document.documentElement.classList.toggle('dark', value === 'dark');
     }
+}
+
+const prefersReducedMotion = (): boolean =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function transitionTheme(value: Appearance): void {
+    if (!document.startViewTransition || prefersReducedMotion()) {
+        updateTheme(value);
+
+        return;
+    }
+
+    document.startViewTransition(() => updateTheme(value));
 }
 
 const setCookie = (name: string, value: string, days = 365) => {
@@ -126,7 +139,7 @@ export function useAppearance(): UseAppearanceReturn {
         // Store in cookie for SSR...
         setCookie('appearance', value);
 
-        updateTheme(value);
+        transitionTheme(value);
     }
 
     return {

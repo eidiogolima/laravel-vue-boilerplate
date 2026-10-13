@@ -27,7 +27,9 @@ defineOptions({
             variant="small"
             :title="trans('Appearance settings')"
             :description="
-                trans('Update the appearance settings for your account')
+                trans(
+                    'Choose how the interface looks. Automatic follows your device settings.',
+                )
             "
         />
         <AppearanceTabs />

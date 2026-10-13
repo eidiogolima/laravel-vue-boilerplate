@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { Check } from '@lucide/vue';
 import { computed } from 'vue';
+import AppearanceSegmentedControl from '@/components/appearance/AppearanceSegmentedControl.vue';
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
@@ -18,8 +16,12 @@ import {
 import { appearanceOptions, useAppearance } from '@/composables/useAppearance';
 import { trans } from '@/lib/translation';
 
-const { appearance, updateAppearance } = useAppearance();
+const { appearance } = useAppearance();
 const { isMobile, state } = useSidebar();
+
+const isCollapsed = computed(
+    () => !isMobile.value && state.value === 'collapsed',
+);
 
 const currentOption = computed(
     () =>
@@ -31,7 +33,7 @@ const currentOption = computed(
 <template>
     <SidebarMenu>
         <SidebarMenuItem>
-            <DropdownMenu>
+            <DropdownMenu v-if="isCollapsed">
                 <DropdownMenuTrigger as-child>
                     <SidebarMenuButton
                         :tooltip="trans('Theme')"
@@ -39,42 +41,29 @@ const currentOption = computed(
                     >
                         <component :is="currentOption.icon" />
                         <span>{{ trans('Theme') }}</span>
-                        <span class="ml-auto text-xs text-muted-foreground">
-                            {{ trans(currentOption.label) }}
-                        </span>
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
-                    class="min-w-44 rounded-lg"
-                    :side="
-                        isMobile
-                            ? 'top'
-                            : state === 'collapsed'
-                              ? 'right'
-                              : 'top'
-                    "
-                    align="start"
-                    :side-offset="4"
+                    class="w-48 rounded-xl p-2"
+                    side="right"
+                    align="end"
+                    :side-offset="8"
                 >
-                    <DropdownMenuLabel class="text-xs text-muted-foreground">
+                    <DropdownMenuLabel
+                        class="px-0.5 pt-0 pb-2 text-xs text-muted-foreground"
+                    >
                         {{ trans('Theme') }}
                     </DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem
-                        v-for="option in appearanceOptions"
-                        :key="option.value"
-                        class="cursor-pointer"
-                        @select="updateAppearance(option.value)"
-                    >
-                        <component :is="option.icon" />
-                        {{ trans(option.label) }}
-                        <Check
-                            v-if="appearance === option.value"
-                            class="ml-auto"
-                        />
-                    </DropdownMenuItem>
+                    <AppearanceSegmentedControl />
                 </DropdownMenuContent>
             </DropdownMenu>
+
+            <div v-else class="flex items-center gap-2 px-2 py-1">
+                <span class="shrink-0 text-xs text-sidebar-foreground/70">
+                    {{ trans('Theme') }}
+                </span>
+                <AppearanceSegmentedControl class="ml-auto max-w-36" />
+            </div>
         </SidebarMenuItem>
     </SidebarMenu>
 </template>
