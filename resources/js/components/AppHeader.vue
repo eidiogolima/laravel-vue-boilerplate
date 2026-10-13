@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { trans } from '@/lib/translation';
 import { Link, usePage } from '@inertiajs/vue3';
-import { Blocks, LayoutGrid, Menu, Search } from '@lucide/vue';
+import { Bell, Blocks, LayoutGrid, Menu, Search } from '@lucide/vue';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import NotificationBell from '@/components/notifications/NotificationBell.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -30,6 +31,7 @@ import UserMenuContent from '@/components/UserMenuContent.vue';
 import { useCurrentUrl } from '@/composables/useCurrentUrl';
 import { getInitials } from '@/composables/useInitials';
 import { components, dashboard } from '@/routes';
+import { index as notificationsIndex } from '@/routes/notifications';
 import type { BreadcrumbItem, NavItem } from '@/types';
 
 type Props = {
@@ -57,6 +59,11 @@ const mainNavItems: NavItem[] = [
         title: 'Components',
         href: components(),
         icon: Blocks,
+    },
+    {
+        title: 'Notifications',
+        href: notificationsIndex(),
+        icon: Bell,
     },
 ];
 </script>
@@ -168,6 +175,7 @@ const mainNavItems: NavItem[] = [
                                 class="size-5 opacity-80 group-hover:opacity-100"
                             />
                         </Button>
+                        <NotificationBell />
                     </div>
 
                     <DropdownMenu>

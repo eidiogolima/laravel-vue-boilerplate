@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Actions\Notifications\CountUnreadNotificationsAction;
+use App\Actions\Notifications\ListUserNotificationsAction;
+use App\Http\Resources\NotificationResource;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Inertia\Inertia;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -17,6 +23,8 @@ class HandleInertiaRequests extends Middleware
      * @var string
      */
     protected $rootView = 'app';
+
+    private const int RECENT_NOTIFICATIONS_LIMIT = 5;
 
     /**
      * Determines the current asset version.
@@ -43,7 +51,18 @@ class HandleInertiaRequests extends Middleware
             'locale' => app()->getLocale(),
             'auth' => [
                 'user' => $request->user(),
+                'can' => [
+                    'accessAdminPanel' => $request->user()?->can('viewAny', User::class) ?? false,
+                ],
             ],
+            'unreadNotificationsCount' => fn (): int => $request->user()
+                ? app(CountUnreadNotificationsAction::class)->handle($request->user())
+                : 0,
+            'recentNotifications' => Inertia::optional(fn (): ?AnonymousResourceCollection => $request->user()
+                ? NotificationResource::collection(
+                    app(ListUserNotificationsAction::class)->handle($request->user(), perPage: self::RECENT_NOTIFICATIONS_LIMIT),
+                )
+                : null),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { Blocks, LayoutGrid } from '@lucide/vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import { Bell, Blocks, LayoutGrid, ShieldCheck } from '@lucide/vue';
+import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavAppearance from '@/components/NavAppearance.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -15,9 +16,13 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { components, dashboard } from '@/routes';
+import { dashboard as adminDashboard } from '@/routes/admin';
+import { index as notificationsIndex } from '@/routes/notifications';
 import type { NavItem } from '@/types';
 
-const mainNavItems: NavItem[] = [
+const page = usePage();
+
+const mainNavItems = computed<NavItem[]>(() => [
     {
         title: 'Dashboard',
         href: dashboard(),
@@ -28,7 +33,23 @@ const mainNavItems: NavItem[] = [
         href: components(),
         icon: Blocks,
     },
+    {
+        title: 'Notifications',
+        href: notificationsIndex(),
+        icon: Bell,
+        badge: page.props.unreadNotificationsCount,
+    },
+]);
+
+const administrationNavItems: NavItem[] = [
+    {
+        title: 'Admin panel',
+        href: adminDashboard(),
+        icon: ShieldCheck,
+    },
 ];
+
+const canAccessAdminPanel = page.props.auth.can.accessAdminPanel;
 </script>
 
 <template>
@@ -47,6 +68,11 @@ const mainNavItems: NavItem[] = [
 
         <SidebarContent>
             <NavMain :items="mainNavItems" />
+            <NavMain
+                v-if="canAccessAdminPanel"
+                label="Administration"
+                :items="administrationNavItems"
+            />
         </SidebarContent>
 
         <SidebarFooter>

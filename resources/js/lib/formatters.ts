@@ -65,3 +65,26 @@ export function formatShortWeekday(weekdayIndex: number): string {
         weekday: 'short',
     }).format(referenceSunday);
 }
+
+const relativeTimeUnits: [Intl.RelativeTimeFormatUnit, number][] = [
+    ['year', 60 * 60 * 24 * 365],
+    ['month', 60 * 60 * 24 * 30],
+    ['week', 60 * 60 * 24 * 7],
+    ['day', 60 * 60 * 24],
+    ['hour', 60 * 60],
+    ['minute', 60],
+];
+
+export function formatRelativeTime(isoDateTime: string): string {
+    const elapsedSeconds = Math.round(
+        (new Date(isoDateTime).getTime() - Date.now()) / 1000,
+    );
+    const formatter = new Intl.RelativeTimeFormat(currentLanguageTag(), {
+        numeric: 'auto',
+    });
+    const [unit, secondsInUnit] = relativeTimeUnits.find(
+        ([, secondsInUnit]) => Math.abs(elapsedSeconds) >= secondsInUnit,
+    ) ?? ['second', 1];
+
+    return formatter.format(Math.round(elapsedSeconds / secondsInUnit), unit);
+}

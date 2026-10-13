@@ -1,5 +1,7 @@
 import type { Directive } from 'vue';
+import type { PaginatedResource } from '@/types/admin';
 import type { Auth } from '@/types/auth';
+import type { AppNotification } from '@/types/notification';
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
@@ -20,6 +22,8 @@ declare module '@inertiajs/core' {
             name: string;
             locale: string;
             auth: Auth;
+            unreadNotificationsCount: number;
+            recentNotifications?: PaginatedResource<AppNotification> | null;
             sidebarOpen: boolean;
             [key: string]: unknown;
         };
