@@ -3,6 +3,7 @@ import { getLocalTimeZone, today } from '@internationalized/date';
 import { Head } from '@inertiajs/vue3';
 import { Receipt, ShoppingCart, UserPlus, Wallet } from '@lucide/vue';
 import { computed, ref, watch } from 'vue';
+import PageContainer from '@/components/PageContainer.vue';
 import AreaChart from '@/components/charts/AreaChart.vue';
 import BarChart from '@/components/charts/BarChart.vue';
 import DonutChart from '@/components/charts/DonutChart.vue';
@@ -184,7 +185,7 @@ const periodDescription = computed(() =>
 <template>
     <Head :title="trans('Dashboard')" />
 
-    <div class="flex flex-col gap-6 p-4 md:p-6">
+    <PageContainer>
         <div
             class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
         >
@@ -328,5 +329,5 @@ const periodDescription = computed(() =>
             :orders="report.currentOrders"
             :channel-labels="channelLabels"
         />
-    </div>
+    </PageContainer>
 </template>

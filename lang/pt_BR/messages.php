@@ -3,6 +3,11 @@
 declare(strict_types=1);
 
 return [
+    'error_log' => [
+        'resolved' => 'Erro marcado como resolvido.',
+        'reopened' => 'Erro reaberto.',
+        'deleted' => 'Registro de erro excluído.',
+    ],
     'notifications' => [
         'all_marked_as_read' => 'Todas as notificações foram marcadas como lidas.',
         'deleted' => 'Notificação excluída.',

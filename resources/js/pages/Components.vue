@@ -2,6 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import { Plus, Trash2 } from '@lucide/vue';
 import { ref } from 'vue';
+import PageContainer from '@/components/PageContainer.vue';
 import CheckboxField from '@/components/form/CheckboxField.vue';
 import DatePicker from '@/components/form/DatePicker.vue';
 import type { DateRangeValue } from '@/components/form/DateRangePicker.vue';
@@ -52,7 +53,7 @@ const simulateSaving = (): void => {
 <template>
     <Head :title="trans('Components')" />
 
-    <div class="flex flex-col gap-10 p-4 md:p-6">
+    <PageContainer>
         <Heading
             :title="trans('Components')"
             :description="
@@ -190,5 +191,5 @@ const simulateSaving = (): void => {
                 />
             </div>
         </section>
-    </div>
+    </PageContainer>
 </template>

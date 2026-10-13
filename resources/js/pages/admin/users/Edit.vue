@@ -2,6 +2,7 @@
 import { Head, setLayoutProps, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import UserController from '@/actions/App/Http/Controllers/Admin/UserController';
+import PageContainer from '@/components/PageContainer.vue';
 import UserForm from '@/components/admin/UserForm.vue';
 import Heading from '@/components/Heading.vue';
 import { trans } from '@/lib/translation';
@@ -28,7 +29,7 @@ const isOwnAccount = computed(
 <template>
     <Head :title="trans('Edit user')" />
 
-    <div class="mx-auto flex w-full max-w-3xl flex-col p-4 md:p-6">
+    <PageContainer size="narrow">
         <Heading
             :title="trans('Edit user')"
             :description="
@@ -46,5 +47,5 @@ const isOwnAccount = computed(
             :is-role-locked="isOwnAccount"
             :submit-label="trans('Save changes')"
         />
-    </div>
+    </PageContainer>
 </template>

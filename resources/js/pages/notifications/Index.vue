@@ -11,6 +11,7 @@ import {
 } from '@lucide/vue';
 import { computed } from 'vue';
 import Heading from '@/components/Heading.vue';
+import PageContainer from '@/components/PageContainer.vue';
 import NotificationListItem from '@/components/notifications/NotificationListItem.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -55,7 +56,7 @@ const { markAsRead, openNotification, markAllAsRead, deleteNotification } =
 <template>
     <Head :title="trans('Notifications')" />
 
-    <div class="flex flex-col gap-6 p-4">
+    <PageContainer>
         <div
             class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
         >
@@ -228,5 +229,5 @@ const { markAsRead, openNotification, markAllAsRead, deleteNotification } =
                 </div>
             </CardContent>
         </Card>
-    </div>
+    </PageContainer>
 </template>

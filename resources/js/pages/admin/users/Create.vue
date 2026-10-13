@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import UserController from '@/actions/App/Http/Controllers/Admin/UserController';
+import PageContainer from '@/components/PageContainer.vue';
 import UserForm from '@/components/admin/UserForm.vue';
 import Heading from '@/components/Heading.vue';
 import { trans } from '@/lib/translation';
@@ -24,7 +25,7 @@ defineProps<{
 <template>
     <Head :title="trans('New user')" />
 
-    <div class="mx-auto flex w-full max-w-3xl flex-col p-4 md:p-6">
+    <PageContainer size="narrow">
         <Heading
             :title="trans('New user')"
             :description="
@@ -37,5 +38,5 @@ defineProps<{
             :roles="roles"
             :submit-label="trans('Create user')"
         />
-    </div>
+    </PageContainer>
 </template>

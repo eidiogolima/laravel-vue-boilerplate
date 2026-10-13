@@ -23,6 +23,7 @@ declare module '@inertiajs/core' {
             locale: string;
             auth: Auth;
             unreadNotificationsCount: number;
+            openErrorLogsCount: number;
             recentNotifications?: PaginatedResource<AppNotification> | null;
             sidebarOpen: boolean;
             [key: string]: unknown;

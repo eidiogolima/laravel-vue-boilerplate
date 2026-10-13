@@ -2,6 +2,7 @@
 import { trans } from '@/lib/translation';
 import { Link } from '@inertiajs/vue3';
 import Heading from '@/components/Heading.vue';
+import PageContainer from '@/components/PageContainer.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useCurrentUrl } from '@/composables/useCurrentUrl';
@@ -30,7 +31,7 @@ const { isCurrentOrParentUrl } = useCurrentUrl();
 </script>
 
 <template>
-    <div class="px-4 py-6">
+    <PageContainer>
         <Heading
             :title="trans('Settings')"
             :description="trans('Manage your profile and account settings')"
@@ -68,5 +69,5 @@ const { isCurrentOrParentUrl } = useCurrentUrl();
                 </section>
             </div>
         </div>
-    </div>
+    </PageContainer>
 </template>

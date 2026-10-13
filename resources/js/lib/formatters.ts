@@ -57,6 +57,13 @@ export function formatDateTime(isoDateTime: string): string {
     }).format(new Date(isoDateTime));
 }
 
+export function formatPreciseDateTime(isoDateTime: string): string {
+    return new Intl.DateTimeFormat(currentLanguageTag(), {
+        dateStyle: 'short',
+        timeStyle: 'medium',
+    }).format(new Date(isoDateTime));
+}
+
 export function formatShortWeekday(weekdayIndex: number): string {
     const referenceSunday = new Date('2026-01-04T12:00:00');
     referenceSunday.setDate(referenceSunday.getDate() + weekdayIndex);

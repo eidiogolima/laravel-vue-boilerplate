@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Actions\ErrorLogs\CountOpenErrorLogsAction;
 use App\Actions\Notifications\CountUnreadNotificationsAction;
 use App\Actions\Notifications\ListUserNotificationsAction;
 use App\Http\Resources\NotificationResource;
+use App\Models\ErrorLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -57,6 +59,9 @@ class HandleInertiaRequests extends Middleware
             ],
             'unreadNotificationsCount' => fn (): int => $request->user()
                 ? app(CountUnreadNotificationsAction::class)->handle($request->user())
+                : 0,
+            'openErrorLogsCount' => fn (): int => $request->user()?->can('viewAny', ErrorLog::class)
+                ? app(CountOpenErrorLogsAction::class)->handle()
                 : 0,
             'recentNotifications' => Inertia::optional(fn (): ?AnonymousResourceCollection => $request->user()
                 ? NotificationResource::collection(

@@ -11,6 +11,7 @@ import {
 } from '@lucide/vue';
 import { useDebounceFn } from '@vueuse/core';
 import { ref, watch } from 'vue';
+import PageContainer from '@/components/PageContainer.vue';
 import DeleteUserDialog from '@/components/admin/DeleteUserDialog.vue';
 import UserRoleBadge from '@/components/admin/UserRoleBadge.vue';
 import Heading from '@/components/Heading.vue';
@@ -85,7 +86,7 @@ const formatJoinedAt = (isoDateTime: string | null): string =>
 <template>
     <Head :title="trans('Users')" />
 
-    <div class="flex flex-col gap-6 p-4 md:p-6">
+    <PageContainer>
         <div
             class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
         >
@@ -342,5 +343,5 @@ const formatJoinedAt = (isoDateTime: string | null): string =>
                 </div>
             </CardContent>
         </Card>
-    </div>
+    </PageContainer>
 </template>
