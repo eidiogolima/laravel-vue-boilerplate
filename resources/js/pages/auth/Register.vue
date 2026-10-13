@@ -29,13 +29,18 @@ defineOptions({
 <template>
     <Head :title="trans('Register')" />
 
+    <div v-if="canLogInWithGoogle" class="flex flex-col gap-6">
+        <GoogleSignInButton />
+        <AuthDivider :label="trans('Or continue with email')" />
+    </div>
+
     <Form
         v-bind="store.form()"
         :reset-on-success="['password', 'password_confirmation']"
         v-slot="{ errors, processing }"
         class="flex flex-col gap-6"
     >
-        <div class="grid gap-6">
+        <div class="grid gap-5">
             <div class="grid gap-2">
                 <Label for="name">{{ trans('Name') }}</Label>
                 <Input
@@ -46,6 +51,7 @@ defineOptions({
                     :tabindex="1"
                     autocomplete="name"
                     name="name"
+                    class="h-10"
                     :placeholder="trans('Full name')"
                 />
                 <InputError :message="errors.name" />
@@ -60,6 +66,7 @@ defineOptions({
                     :tabindex="2"
                     autocomplete="email"
                     name="email"
+                    class="h-10"
                     :placeholder="trans('email@example.com')"
                 />
                 <InputError :message="errors.email" />
@@ -73,6 +80,7 @@ defineOptions({
                     :tabindex="3"
                     autocomplete="new-password"
                     name="password"
+                    class="h-10"
                     :placeholder="trans('Password')"
                     :passwordrules="passwordRules"
                 />
@@ -89,6 +97,7 @@ defineOptions({
                     :tabindex="4"
                     autocomplete="new-password"
                     name="password_confirmation"
+                    class="h-10"
                     :placeholder="trans('Confirm password')"
                     :passwordrules="passwordRules"
                 />
@@ -97,8 +106,9 @@ defineOptions({
 
             <Button
                 type="submit"
-                class="mt-2 w-full"
-                tabindex="5"
+                size="lg"
+                class="mt-1 w-full"
+                :tabindex="5"
                 :disabled="processing"
                 data-test="register-user-button"
             >
@@ -107,19 +117,11 @@ defineOptions({
             </Button>
         </div>
 
-        <div v-if="canLogInWithGoogle" class="flex flex-col gap-4">
-            <AuthDivider :label="trans('Or continue with')" />
-            <GoogleSignInButton />
-        </div>
-
-        <div class="text-center text-sm text-muted-foreground">
+        <p class="text-center text-sm text-muted-foreground">
             {{ trans('Already have an account?') }}
-            <TextLink
-                :href="login()"
-                class="underline underline-offset-4"
-                :tabindex="6"
-                >{{ trans('Log in') }}</TextLink
-            >
-        </div>
+            <TextLink :href="login()" :tabindex="6">{{
+                trans('Log in')
+            }}</TextLink>
+        </p>
     </Form>
 </template>

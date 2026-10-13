@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { trans } from '@/lib/translation';
-import AuthLayout from '@/layouts/auth/AuthSimpleLayout.vue';
+import AuthLayout from '@/layouts/auth/AuthSplitLayout.vue';
 
 const { title = '', description = '' } = defineProps<{
     title?: string;

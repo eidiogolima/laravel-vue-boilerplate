@@ -16,6 +16,7 @@ import PasskeyVerify from '@/components/PasskeyVerify.vue';
 import GoogleSignInButton from '@/components/GoogleSignInButton.vue';
 import AuthDivider from '@/components/AuthDivider.vue';
 import { Passkeys } from '@laravel/passkeys';
+import { CircleCheck } from '@lucide/vue';
 import { onMounted, ref } from 'vue';
 
 defineOptions({
@@ -43,9 +44,21 @@ onMounted(() => {
 
     <div
         v-if="status"
-        class="mb-4 text-center text-sm font-medium text-green-600"
+        class="flex items-center gap-2 rounded-lg border border-green-600/20 bg-green-600/10 px-4 py-3 text-sm font-medium text-green-700 dark:text-green-400"
     >
+        <CircleCheck class="size-4 shrink-0" />
         {{ status }}
+    </div>
+
+    <div
+        v-if="canLogInWithGoogle || arePasskeysSupported"
+        class="flex flex-col gap-6"
+    >
+        <div class="flex flex-col gap-2">
+            <GoogleSignInButton v-if="canLogInWithGoogle" />
+            <PasskeyVerify :show-divider="false" />
+        </div>
+        <AuthDivider :label="trans('Or continue with email')" />
     </div>
 
     <Form
@@ -54,7 +67,7 @@ onMounted(() => {
         v-slot="{ errors, processing }"
         class="flex flex-col gap-6"
     >
-        <div class="grid gap-6">
+        <div class="grid gap-5">
             <div class="grid gap-2">
                 <Label for="email">{{ trans('Email address') }}</Label>
                 <Input
@@ -65,6 +78,7 @@ onMounted(() => {
                     v-focus
                     :tabindex="1"
                     autocomplete="email"
+                    class="h-10"
                     :placeholder="trans('email@example.com')"
                 />
                 <InputError :message="errors.email" />
@@ -88,21 +102,21 @@ onMounted(() => {
                     required
                     :tabindex="2"
                     autocomplete="current-password"
+                    class="h-10"
                     :placeholder="trans('Password')"
                 />
                 <InputError :message="errors.password" />
             </div>
 
-            <div class="flex items-center justify-between">
-                <Label for="remember" class="flex items-center space-x-3">
-                    <Checkbox id="remember" name="remember" :tabindex="3" />
-                    <span>{{ trans('Remember me') }}</span>
-                </Label>
-            </div>
+            <Label for="remember" class="flex items-center gap-3 font-normal">
+                <Checkbox id="remember" name="remember" :tabindex="3" />
+                <span>{{ trans('Remember me') }}</span>
+            </Label>
 
             <Button
                 type="submit"
-                class="mt-4 w-full"
+                size="lg"
+                class="w-full"
                 :tabindex="4"
                 :disabled="processing"
                 data-test="login-button"
@@ -112,22 +126,11 @@ onMounted(() => {
             </Button>
         </div>
 
-        <div
-            v-if="canLogInWithGoogle || arePasskeysSupported"
-            class="flex flex-col gap-4"
-        >
-            <AuthDivider :label="trans('Or continue with')" />
-            <div class="flex flex-col gap-2">
-                <GoogleSignInButton v-if="canLogInWithGoogle" />
-                <PasskeyVerify :show-divider="false" />
-            </div>
-        </div>
-
-        <div class="text-center text-sm text-muted-foreground">
+        <p class="text-center text-sm text-muted-foreground">
             {{ trans("Don't have an account?") }}
-            <TextLink :href="register()" :tabindex="5">{{
+            <TextLink :href="register()" :tabindex="6">{{
                 trans('Sign up')
             }}</TextLink>
-        </div>
+        </p>
     </Form>
 </template>
