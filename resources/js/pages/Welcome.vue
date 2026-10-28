@@ -13,6 +13,7 @@ import {
 } from '@lucide/vue';
 import { computed } from 'vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
+import LocaleSwitcher from '@/components/LocaleSwitcher.vue';
 import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -54,9 +55,9 @@ const features = [
     },
     {
         icon: Languages,
-        title: trans('Ready for Portuguese'),
+        title: trans('Multilingual'),
         description: trans(
-            'Interface, emails and validation messages translated to Brazilian Portuguese.',
+            'Interface, emails and validation messages available in English, Spanish and Brazilian Portuguese.',
         ),
     },
     {
@@ -175,6 +176,7 @@ const frequentlyAskedQuestions = [
                 </nav>
 
                 <div class="flex items-center gap-2">
+                    <LocaleSwitcher />
                     <Button v-if="isAuthenticated" as-child>
                         <Link :href="dashboard()">{{
                             trans('Dashboard')

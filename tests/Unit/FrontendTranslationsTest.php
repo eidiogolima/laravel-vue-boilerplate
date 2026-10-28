@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-test('every translation key used in the frontend has a pt_BR translation', function () {
-    $translations = json_decode(file_get_contents(dirname(__DIR__, 2).'/lang/pt_BR.json'), true);
+test('every translation key used in the frontend has a translation', function (string $locale) {
+    $translations = json_decode(file_get_contents(dirname(__DIR__, 2)."/lang/{$locale}.json"), true);
     $sourceFiles = new RegexIterator(
         new RecursiveIteratorIterator(new RecursiveDirectoryIterator(dirname(__DIR__, 2).'/resources/js')),
         '#/resources/js/(?!actions/|routes/|wayfinder/).+\.(vue|ts)$#',
@@ -25,4 +25,4 @@ test('every translation key used in the frontend has a pt_BR translation', funct
     }
 
     expect(array_unique($missingKeys))->toBeEmpty();
-});
+})->with(['pt_BR', 'es']);

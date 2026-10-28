@@ -1,9 +1,12 @@
 import { usePage } from '@inertiajs/vue3';
+import es from '../../../lang/es.json';
 import ptBR from '../../../lang/pt_BR.json';
 
 type TranslationReplacements = Record<string, string | number>;
 
 const translationsByLocale: Record<string, Record<string, string>> = {
+    en: {},
+    es,
     pt_BR: ptBR,
 };
 

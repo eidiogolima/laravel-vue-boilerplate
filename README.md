@@ -16,7 +16,7 @@ A ideia deste boilerplate é produzir **código limpo**, com **manutenção faci
 
 - **Backend:** Laravel 13, PHP 8.5, autenticação com Fortify (login, cadastro, redefinição de senha, verificação de e-mail, 2FA e passkeys)
 - **Frontend:** Vue 3, Inertia v3, TypeScript, Tailwind CSS v4, Wayfinder
-- **pt-BR por padrão:** `APP_LOCALE=pt_BR`, fuso horário `America/Sao_Paulo` e traduções pt-BR em `lang/pt_BR`
+- **Multilíngue:** inglês, espanhol e português do Brasil, com seletor de idioma na página inicial, nas telas de autenticação e no painel. O padrão é `APP_LOCALE=pt_BR` (fuso `America/Sao_Paulo`) e as traduções ficam em `lang/en`, `lang/es` e `lang/pt_BR`
 - **Qualidade:** tipagem estrita em todos os arquivos PHP, Pint, PHPStan (Larastan nível 7), Pest e `vp check` no frontend
 - **CI:** workflow do GitHub Actions que roda todas as verificações e testes a cada push na `main` e em pull requests
 - **Pronto para o Claude Code:** regras do projeto em `CLAUDE.md` e diretrizes do Laravel Boost em `AGENTS.md`
@@ -44,7 +44,7 @@ O `composer setup` instala as dependências, cria o `.env`, gera a chave da apli
 
 Todas as convenções são obrigatórias e estão descritas no [CLAUDE.md](CLAUDE.md). Em resumo:
 
-- Código em inglês. Português só é permitido em textos exibidos ao usuário, armazenados em `lang/pt_BR/messages.php` e `lang/pt_BR/errors.php`.
+- Código em inglês. Português só é permitido em textos exibidos ao usuário, armazenados em `lang/{en,es,pt_BR}/messages.php` e `lang/{en,es,pt_BR}/errors.php`, sempre nos três idiomas.
 - A lógica de negócio fica em Actions com uma única responsabilidade. Services são apenas para integrações externas. Controllers não têm lógica de negócio.
 - Form Requests e API Resources são obrigatórios, e listagens são sempre paginadas.
 - `declare(strict_types=1)` e tipagem completa em todo o código. Nenhum comentário no código.

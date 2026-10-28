@@ -16,7 +16,7 @@ This boilerplate aims to produce **clean code** that is **easy to maintain** and
 
 - **Backend:** Laravel 13, PHP 8.5, Fortify authentication (login, registration, password reset, email verification, 2FA and passkeys)
 - **Frontend:** Vue 3, Inertia v3, TypeScript, Tailwind CSS v4, Wayfinder
-- **pt-BR by default:** `APP_LOCALE=pt_BR`, `America/Sao_Paulo` timezone and pt-BR translations in `lang/pt_BR`
+- **Multilingual:** English, Spanish and Brazilian Portuguese, with a language switcher on the home page, the authentication screens and the dashboard. The default is `APP_LOCALE=pt_BR` (`America/Sao_Paulo` timezone) and translations live in `lang/en`, `lang/es` and `lang/pt_BR`
 - **Quality:** strict types in every PHP file, Pint, PHPStan (Larastan level 7), Pest, and `vp check` for the frontend
 - **CI:** GitHub Actions workflow running all checks and tests on every push to `main` and on pull requests
 - **Claude Code ready:** project rules in `CLAUDE.md` and Laravel Boost guidelines in `AGENTS.md`
@@ -44,7 +44,7 @@ composer dev
 
 All conventions are mandatory and described in [CLAUDE.md](CLAUDE.md). In short:
 
-- Code in English. Portuguese is only allowed in user-facing text, stored in `lang/pt_BR/messages.php` and `lang/pt_BR/errors.php`.
+- Code in English. Portuguese is only allowed in user-facing text, stored in `lang/{en,es,pt_BR}/messages.php` and `lang/{en,es,pt_BR}/errors.php`, always in all three languages.
 - Business logic lives in single-purpose Actions. Services are only for external integrations. Controllers have no business logic.
 - Form Requests and API Resources are mandatory, and listings are always paginated.
 - `declare(strict_types=1)` and full typing everywhere. No comments in code.

@@ -7,6 +7,7 @@ namespace App\Http\Middleware;
 use App\Actions\ErrorLogs\CountOpenErrorLogsAction;
 use App\Actions\Notifications\CountUnreadNotificationsAction;
 use App\Actions\Notifications\ListUserNotificationsAction;
+use App\Enums\SupportedLocale;
 use App\Http\Resources\NotificationResource;
 use App\Models\ErrorLog;
 use App\Models\User;
@@ -51,6 +52,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'locale' => app()->getLocale(),
+            'locales' => SupportedLocale::options(),
             'auth' => [
                 'user' => $request->user(),
                 'can' => [

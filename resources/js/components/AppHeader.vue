@@ -6,6 +6,7 @@ import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import LocaleSwitcher from '@/components/LocaleSwitcher.vue';
 import NotificationBell from '@/components/notifications/NotificationBell.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -175,6 +176,7 @@ const mainNavItems: NavItem[] = [
                                 class="size-5 opacity-80 group-hover:opacity-100"
                             />
                         </Button>
+                        <LocaleSwitcher />
                         <NotificationBell />
                     </div>
 
