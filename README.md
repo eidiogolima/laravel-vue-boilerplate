@@ -55,3 +55,7 @@ Todas as convenções são obrigatórias e estão descritas no [CLAUDE.md](CLAUD
 1. Copie ou clone este boilerplate.
 2. Renomeie o pacote no `composer.json` e defina o `APP_NAME` no `.env`.
 3. Substitua este README pela documentação do seu projeto.
+
+## Créditos
+
+Criado e mantido por [Diogo Lima](https://github.com/eidiogolima).

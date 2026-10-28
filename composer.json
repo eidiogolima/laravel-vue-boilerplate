@@ -8,6 +8,12 @@
         "framework"
     ],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Diogo Lima",
+            "homepage": "https://github.com/eidiogolima"
+        }
+    ],
     "require": {
         "php": "^8.5",
         "inertiajs/inertia-laravel": "^3.0",

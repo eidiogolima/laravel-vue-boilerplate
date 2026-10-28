@@ -55,3 +55,7 @@ All conventions are mandatory and described in [CLAUDE.md](CLAUDE.md). In short:
 1. Copy or clone this boilerplate.
 2. Rename the package in `composer.json` and set `APP_NAME` in `.env`.
 3. Replace this README with your project's documentation.
+
+## Credits
+
+Created and maintained by [Diogo Lima](https://github.com/eidiogolima).
