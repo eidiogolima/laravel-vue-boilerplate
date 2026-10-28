@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, Link, usePage } from "@inertiajs/vue3";
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import {
     ArrowRight,
     Check,
@@ -12,17 +12,17 @@ import {
     Rocket,
     ShieldCheck,
     Zap,
-} from "@lucide/vue";
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
-import AppLogoIcon from "@/components/AppLogoIcon.vue";
-import LocaleSwitcher from "@/components/LocaleSwitcher.vue";
-import PlaceholderPattern from "@/components/PlaceholderPattern.vue";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { vReveal } from "@/directives/reveal";
-import { formatWholeCurrency } from "@/lib/formatters";
-import { trans } from "@/lib/translation";
-import { dashboard, home, login, register } from "@/routes";
+} from '@lucide/vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import AppLogoIcon from '@/components/AppLogoIcon.vue';
+import LocaleSwitcher from '@/components/LocaleSwitcher.vue';
+import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { vReveal } from '@/directives/reveal';
+import { formatWholeCurrency } from '@/lib/formatters';
+import { trans } from '@/lib/translation';
+import { dashboard, home, login, register } from '@/routes';
 
 const page = usePage();
 const appName = page.props.name;
@@ -30,52 +30,52 @@ const isAuthenticated = computed(() => Boolean(page.props.auth.user));
 const currentYear = new Date().getFullYear();
 
 const navigationLinks = [
-    { href: "#features", label: trans("Features") },
-    { href: "#pricing", label: trans("Pricing") },
-    { href: "#faq", label: trans("FAQ") },
+    { href: '#features', label: trans('Features') },
+    { href: '#pricing', label: trans('Pricing') },
+    { href: '#faq', label: trans('FAQ') },
 ];
 
 const features = [
     {
         icon: ShieldCheck,
-        title: trans("Secure authentication"),
+        title: trans('Secure authentication'),
         description: trans(
-            "Login, registration, email verification and password reset ready to use.",
+            'Login, registration, email verification and password reset ready to use.',
         ),
     },
     {
         icon: KeyRound,
-        title: trans("Passkeys and 2FA"),
+        title: trans('Passkeys and 2FA'),
         description: trans(
-            "Passwordless sign-in and two-factor authentication to protect every account.",
+            'Passwordless sign-in and two-factor authentication to protect every account.',
         ),
     },
     {
         icon: Zap,
-        title: trans("Modern stack"),
+        title: trans('Modern stack'),
         description: trans(
-            "Laravel, Vue, Inertia and Tailwind working together for a fast experience.",
+            'Laravel, Vue, Inertia and Tailwind working together for a fast experience.',
         ),
     },
     {
         icon: Languages,
-        title: trans("Multilingual"),
+        title: trans('Multilingual'),
         description: trans(
-            "Interface, emails and validation messages available in English, Spanish and Brazilian Portuguese.",
+            'Interface, emails and validation messages available in English, Spanish and Brazilian Portuguese.',
         ),
     },
     {
         icon: Code,
-        title: trans("Clean architecture"),
+        title: trans('Clean architecture'),
         description: trans(
-            "Single-purpose Actions, strict typing and conventions that make maintenance easy.",
+            'Single-purpose Actions, strict typing and conventions that make maintenance easy.',
         ),
     },
     {
         icon: FlaskConical,
-        title: trans("Tested from day one"),
+        title: trans('Tested from day one'),
         description: trans(
-            "Feature and unit tests with a CI pipeline that checks every change.",
+            'Feature and unit tests with a CI pipeline that checks every change.',
         ),
     },
 ];
@@ -92,8 +92,8 @@ let buildTimer: ReturnType<typeof setInterval> | null = null;
 
 const blockClass = (requiredSteps: number): string =>
     completedSteps.value >= requiredSteps
-        ? "translate-y-0 scale-100 opacity-100"
-        : "translate-y-3 scale-95 opacity-0";
+        ? 'translate-y-0 scale-100 opacity-100'
+        : 'translate-y-3 scale-95 opacity-0';
 
 const advanceBuild = (): void => {
     completedSteps.value =
@@ -101,7 +101,7 @@ const advanceBuild = (): void => {
 };
 
 onMounted(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         completedSteps.value = buildSteps.length;
 
         return;
@@ -120,9 +120,9 @@ const planPricesByLocale: Record<
     string,
     { currency: string; pro: number; business: number }
 > = {
-    en: { currency: "USD", pro: 9, business: 29 },
-    es: { currency: "EUR", pro: 9, business: 27 },
-    pt_BR: { currency: "BRL", pro: 49, business: 149 },
+    en: { currency: 'USD', pro: 9, business: 29 },
+    es: { currency: 'EUR', pro: 9, business: 27 },
+    pt_BR: { currency: 'BRL', pro: 49, business: 149 },
 };
 
 const plans = computed(() => {
@@ -131,42 +131,42 @@ const plans = computed(() => {
 
     return [
         {
-            title: trans("Starter"),
-            price: trans("Free"),
-            period: "",
-            description: trans("For those who want to try the product."),
+            title: trans('Starter'),
+            price: trans('Free'),
+            period: '',
+            description: trans('For those who want to try the product.'),
             benefits: [
-                trans("1 user"),
-                trans("Core features"),
-                trans("Community support"),
+                trans('1 user'),
+                trans('Core features'),
+                trans('Community support'),
             ],
-            callToAction: trans("Start for free"),
+            callToAction: trans('Start for free'),
             isHighlighted: false,
         },
         {
-            title: trans("Pro"),
+            title: trans('Pro'),
             price: formatWholeCurrency(pro, currency),
-            period: trans("/month"),
-            description: trans("For growing teams that need more."),
+            period: trans('/month'),
+            description: trans('For growing teams that need more.'),
             benefits: [
-                trans("Up to 10 users"),
-                trans("All features"),
-                trans("Email support"),
+                trans('Up to 10 users'),
+                trans('All features'),
+                trans('Email support'),
             ],
-            callToAction: trans("Choose Pro"),
+            callToAction: trans('Choose Pro'),
             isHighlighted: true,
         },
         {
-            title: trans("Business"),
+            title: trans('Business'),
             price: formatWholeCurrency(business, currency),
-            period: trans("/month"),
-            description: trans("For companies operating at scale."),
+            period: trans('/month'),
+            description: trans('For companies operating at scale.'),
             benefits: [
-                trans("Unlimited users"),
-                trans("All features"),
-                trans("Priority support"),
+                trans('Unlimited users'),
+                trans('All features'),
+                trans('Priority support'),
             ],
-            callToAction: trans("Choose Business"),
+            callToAction: trans('Choose Business'),
             isHighlighted: false,
         },
     ];
@@ -174,27 +174,27 @@ const plans = computed(() => {
 
 const frequentlyAskedQuestions = [
     {
-        title: trans("Can I try it before paying?"),
+        title: trans('Can I try it before paying?'),
         description: trans(
-            "Yes. The Starter plan is free and you can upgrade whenever you want.",
+            'Yes. The Starter plan is free and you can upgrade whenever you want.',
         ),
     },
     {
-        title: trans("Can I cancel at any time?"),
+        title: trans('Can I cancel at any time?'),
         description: trans(
-            "Yes. There is no commitment, and you keep access until the end of the paid period.",
+            'Yes. There is no commitment, and you keep access until the end of the paid period.',
         ),
     },
     {
-        title: trans("Is my data secure?"),
+        title: trans('Is my data secure?'),
         description: trans(
-            "Yes. We use two-factor authentication, passkeys and encrypted passwords to protect your account.",
+            'Yes. We use two-factor authentication, passkeys and encrypted passwords to protect your account.',
         ),
     },
     {
-        title: trans("Do you offer support?"),
+        title: trans('Do you offer support?'),
         description: trans(
-            "Yes. Every plan includes support, with faster response times on paid plans.",
+            'Yes. Every plan includes support, with faster response times on paid plans.',
         ),
     },
 ];
@@ -233,16 +233,16 @@ const frequentlyAskedQuestions = [
                     <LocaleSwitcher />
                     <Button v-if="isAuthenticated" as-child>
                         <Link :href="dashboard()">{{
-                            trans("Dashboard")
+                            trans('Dashboard')
                         }}</Link>
                     </Button>
                     <template v-else>
                         <Button variant="ghost" as-child>
-                            <Link :href="login()">{{ trans("Log in") }}</Link>
+                            <Link :href="login()">{{ trans('Log in') }}</Link>
                         </Button>
                         <Button as-child>
                             <Link :href="register()">{{
-                                trans("Get started")
+                                trans('Get started')
                             }}</Link>
                         </Button>
                     </template>
@@ -273,7 +273,7 @@ const frequentlyAskedQuestions = [
                                 class="relative size-2 rounded-full bg-green-500"
                             />
                         </span>
-                        {{ trans("Your SaaS ready to launch") }}
+                        {{ trans('Your SaaS ready to launch') }}
                     </Badge>
 
                     <h1
@@ -281,7 +281,7 @@ const frequentlyAskedQuestions = [
                         style="--landing-delay: 100ms"
                     >
                         <span class="landing-gradient-text">{{
-                            trans("Launch your SaaS faster")
+                            trans('Launch your SaaS faster')
                         }}</span>
                     </h1>
 
@@ -291,7 +291,7 @@ const frequentlyAskedQuestions = [
                     >
                         {{
                             trans(
-                                "Everything you need to start: authentication, security, settings and a solid architecture, so you can focus on your product.",
+                                'Everything you need to start: authentication, security, settings and a solid architecture, so you can focus on your product.',
                             )
                         }}
                     </p>
@@ -312,8 +312,8 @@ const frequentlyAskedQuestions = [
                             >
                                 {{
                                     isAuthenticated
-                                        ? trans("Go to dashboard")
-                                        : trans("Start for free")
+                                        ? trans('Go to dashboard')
+                                        : trans('Start for free')
                                 }}
                                 <ArrowRight
                                     class="transition-transform group-hover:translate-x-1"
@@ -326,7 +326,7 @@ const frequentlyAskedQuestions = [
                             class="bg-background/60 backdrop-blur transition-all hover:-translate-y-0.5"
                             as-child
                         >
-                            <a href="#features">{{ trans("See features") }}</a>
+                            <a href="#features">{{ trans('See features') }}</a>
                         </Button>
                     </div>
 
@@ -453,7 +453,7 @@ const frequentlyAskedQuestions = [
                                     ]"
                                 >
                                     <Rocket class="size-4" />
-                                    {{ trans("Your SaaS ready to launch") }}
+                                    {{ trans('Your SaaS ready to launch') }}
                                 </div>
                             </div>
                         </div>
@@ -470,12 +470,12 @@ const frequentlyAskedQuestions = [
                         <h2
                             class="text-3xl font-semibold tracking-tight md:text-4xl"
                         >
-                            {{ trans("Everything you need to get started") }}
+                            {{ trans('Everything you need to get started') }}
                         </h2>
                         <p class="max-w-2xl text-muted-foreground">
                             {{
                                 trans(
-                                    "A complete foundation so you do not have to rebuild the basics in every project.",
+                                    'A complete foundation so you do not have to rebuild the basics in every project.',
                                 )
                             }}
                         </p>
@@ -514,12 +514,12 @@ const frequentlyAskedQuestions = [
                         <h2
                             class="text-3xl font-semibold tracking-tight md:text-4xl"
                         >
-                            {{ trans("Simple and transparent pricing") }}
+                            {{ trans('Simple and transparent pricing') }}
                         </h2>
                         <p class="max-w-2xl text-muted-foreground">
                             {{
                                 trans(
-                                    "Choose the plan that fits your moment. Change whenever you want.",
+                                    'Choose the plan that fits your moment. Change whenever you want.',
                                 )
                             }}
                         </p>
@@ -541,7 +541,7 @@ const frequentlyAskedQuestions = [
                                 v-if="plan.isHighlighted"
                                 class="absolute -top-3 left-8"
                             >
-                                {{ trans("Most popular") }}
+                                {{ trans('Most popular') }}
                             </Badge>
 
                             <div class="flex flex-col gap-2">
@@ -594,7 +594,7 @@ const frequentlyAskedQuestions = [
                         v-reveal
                         class="text-center text-3xl font-semibold tracking-tight md:text-4xl"
                     >
-                        {{ trans("Frequently asked questions") }}
+                        {{ trans('Frequently asked questions') }}
                     </h2>
 
                     <div
@@ -637,12 +637,12 @@ const frequentlyAskedQuestions = [
                         <h2
                             class="text-3xl font-semibold tracking-tight md:text-4xl"
                         >
-                            {{ trans("Ready to get started?") }}
+                            {{ trans('Ready to get started?') }}
                         </h2>
                         <p class="max-w-xl text-muted-foreground">
                             {{
                                 trans(
-                                    "Create your account in less than a minute.",
+                                    'Create your account in less than a minute.',
                                 )
                             }}
                         </p>
@@ -658,8 +658,8 @@ const frequentlyAskedQuestions = [
                             >
                                 {{
                                     isAuthenticated
-                                        ? trans("Go to dashboard")
-                                        : trans("Create my account")
+                                        ? trans('Go to dashboard')
+                                        : trans('Create my account')
                                 }}
                                 <ArrowRight
                                     class="transition-transform group-hover:translate-x-1"
@@ -686,7 +686,7 @@ const frequentlyAskedQuestions = [
                             {{ appName }}
                         </Link>
                         <p class="max-w-xs text-sm text-muted-foreground">
-                            {{ trans("Launch your SaaS faster") }}
+                            {{ trans('Launch your SaaS faster') }}
                         </p>
                     </div>
 
@@ -707,20 +707,20 @@ const frequentlyAskedQuestions = [
                             :href="dashboard()"
                             class="w-fit text-muted-foreground transition-colors hover:text-foreground"
                         >
-                            {{ trans("Dashboard") }}
+                            {{ trans('Dashboard') }}
                         </Link>
                         <template v-else>
                             <Link
                                 :href="login()"
                                 class="w-fit text-muted-foreground transition-colors hover:text-foreground"
                             >
-                                {{ trans("Log in") }}
+                                {{ trans('Log in') }}
                             </Link>
                             <Link
                                 :href="register()"
                                 class="w-fit text-muted-foreground transition-colors hover:text-foreground"
                             >
-                                {{ trans("Get started") }}
+                                {{ trans('Get started') }}
                             </Link>
                         </template>
                     </nav>
@@ -731,7 +731,7 @@ const frequentlyAskedQuestions = [
                 >
                     <p>
                         © {{ currentYear }} {{ appName }}.
-                        {{ trans("All rights reserved.") }}
+                        {{ trans('All rights reserved.') }}
                     </p>
                     <LocaleSwitcher />
                 </div>

@@ -1,7 +1,7 @@
-import type { Directive } from "vue";
+import type { Directive } from 'vue';
 
 const revealObserver =
-    typeof IntersectionObserver === "undefined"
+    typeof IntersectionObserver === 'undefined'
         ? null
         : new IntersectionObserver(
               (entries) => {
@@ -10,20 +10,20 @@ const revealObserver =
                           return;
                       }
 
-                      entry.target.classList.add("is-visible");
+                      entry.target.classList.add('is-visible');
                       revealObserver?.unobserve(entry.target);
                   });
               },
-              { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+              { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
           );
 
 export const vReveal: Directive<HTMLElement, number | undefined> = {
     mounted(element, binding) {
-        element.classList.add("landing-reveal");
-        element.style.setProperty("--landing-delay", `${binding.value ?? 0}ms`);
+        element.classList.add('landing-reveal');
+        element.style.setProperty('--landing-delay', `${binding.value ?? 0}ms`);
 
         if (revealObserver === null) {
-            element.classList.add("is-visible");
+            element.classList.add('is-visible');
 
             return;
         }
