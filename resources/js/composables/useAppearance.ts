@@ -90,20 +90,35 @@ const prefersDark = (): boolean => {
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
 };
 
-const handleSystemThemeChange = () => {
-    const currentAppearance = getStoredAppearance();
+let isPublicPageActive =
+    typeof document !== 'undefined' &&
+    document.documentElement.dataset.publicPage === 'true';
 
-    updateTheme(currentAppearance || 'system');
+export const isPublicPage = (component: string): boolean =>
+    component === 'Welcome' ||
+    component === 'ErrorPage' ||
+    component.startsWith('auth/');
+
+const resolvePageAppearance = (): Appearance =>
+    isPublicPageActive ? 'system' : getStoredAppearance() || 'system';
+
+const handleSystemThemeChange = () => {
+    updateTheme(resolvePageAppearance());
 };
+
+export function syncThemeWithPage(component: string): void {
+    isPublicPageActive = isPublicPage(component);
+
+    updateTheme(resolvePageAppearance());
+}
 
 export function initializeTheme(): void {
     if (typeof window === 'undefined') {
         return;
     }
 
-    // Initialize theme from saved preference or default to system...
-    const savedAppearance = getStoredAppearance();
-    updateTheme(savedAppearance || 'system');
+    // Public pages always follow the system; the saved preference only applies to the authenticated area...
+    updateTheme(resolvePageAppearance());
 
     // Set up system theme change listener...
     mediaQuery()?.addEventListener('change', handleSystemThemeChange);

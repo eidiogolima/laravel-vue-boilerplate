@@ -9,6 +9,14 @@ export function formatCurrency(value: number): string {
     }).format(value);
 }
 
+export function formatWholeCurrency(value: number, currency: string): string {
+    return new Intl.NumberFormat(currentLanguageTag(), {
+        style: 'currency',
+        currency,
+        maximumFractionDigits: 0,
+    }).format(value);
+}
+
 export function formatCompactCurrency(value: number): string {
     return new Intl.NumberFormat(currentLanguageTag(), {
         style: 'currency',

@@ -11,6 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HandleAppearance
 {
+    public static function isPublicPage(string $component): bool
+    {
+        return in_array($component, ['Welcome', 'ErrorPage'], true) || str_starts_with($component, 'auth/');
+    }
+
+    public static function appearanceFor(string $component, string $storedAppearance): string
+    {
+        return self::isPublicPage($component) ? 'system' : $storedAppearance;
+    }
+
     /**
      * Handle an incoming request.
      *

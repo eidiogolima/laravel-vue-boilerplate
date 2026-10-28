@@ -1,5 +1,8 @@
-import { createInertiaApp } from '@inertiajs/vue3';
-import { initializeTheme } from '@/composables/useAppearance';
+import { createInertiaApp, router } from '@inertiajs/vue3';
+import {
+    initializeTheme,
+    syncThemeWithPage,
+} from '@/composables/useAppearance';
 import AdminLayout from '@/layouts/AdminLayout.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
@@ -41,6 +44,10 @@ void createInertiaApp({
 
 // This will set light / dark mode on page load...
 initializeTheme();
+
+router.on('navigate', (event) =>
+    syncThemeWithPage(event.detail.page.component),
+);
 
 // This will listen for flash toast data from the server...
 initializeFlashToast();

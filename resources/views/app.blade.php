@@ -1,5 +1,6 @@
+@php($pageAppearance = \App\Http\Middleware\HandleAppearance::appearanceFor($page['component'], $appearance ?? 'system'))
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"  @class(['dark' => ($appearance ?? 'system') == 'dark'])>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-public-page="{{ \App\Http\Middleware\HandleAppearance::isPublicPage($page['component']) ? 'true' : 'false' }}"  @class(['dark' => $pageAppearance == 'dark'])>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +8,7 @@
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
             (function() {
-                const appearance = '{{ $appearance ?? "system" }}';
+                const appearance = '{{ $pageAppearance }}';
 
                 if (appearance === 'system') {
                     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
