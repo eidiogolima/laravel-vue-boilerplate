@@ -8,10 +8,12 @@ import {
     FlaskConical,
     KeyRound,
     Languages,
+    LoaderCircle,
+    Rocket,
     ShieldCheck,
     Zap,
 } from "@lucide/vue";
-import { computed } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import AppLogoIcon from "@/components/AppLogoIcon.vue";
 import LocaleSwitcher from "@/components/LocaleSwitcher.vue";
 import PlaceholderPattern from "@/components/PlaceholderPattern.vue";
@@ -77,6 +79,42 @@ const features = [
         ),
     },
 ];
+
+const buildSteps = features.slice(0, 5);
+const completedSteps = ref(0);
+const buildProgress = computed(() =>
+    Math.min((completedSteps.value / buildSteps.length) * 100, 100),
+);
+const isBuildComplete = computed(
+    () => completedSteps.value >= buildSteps.length,
+);
+let buildTimer: ReturnType<typeof setInterval> | null = null;
+
+const blockClass = (requiredSteps: number): string =>
+    completedSteps.value >= requiredSteps
+        ? "translate-y-0 scale-100 opacity-100"
+        : "translate-y-3 scale-95 opacity-0";
+
+const advanceBuild = (): void => {
+    completedSteps.value =
+        completedSteps.value > buildSteps.length ? 0 : completedSteps.value + 1;
+};
+
+onMounted(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        completedSteps.value = buildSteps.length;
+
+        return;
+    }
+
+    buildTimer = setInterval(advanceBuild, 1100);
+});
+
+onBeforeUnmount(() => {
+    if (buildTimer !== null) {
+        clearInterval(buildTimer);
+    }
+});
 
 const planPricesByLocale: Record<
     string,
@@ -314,28 +352,108 @@ const frequentlyAskedQuestions = [
                                 />
                             </div>
                             <div
-                                class="grid gap-2 rounded-xl border border-border bg-background p-4 md:grid-cols-[180px_1fr]"
+                                class="flex flex-col gap-4 rounded-xl border border-border bg-background p-4"
                             >
                                 <div
-                                    class="relative hidden h-72 overflow-hidden rounded-md border border-border md:block"
+                                    class="h-1 w-full overflow-hidden rounded-full bg-muted"
                                 >
-                                    <PlaceholderPattern />
+                                    <div
+                                        class="h-full rounded-full bg-gradient-to-r from-violet-500 via-sky-500 to-emerald-500 transition-all duration-700 ease-out"
+                                        :style="{ width: `${buildProgress}%` }"
+                                    />
                                 </div>
-                                <div class="grid gap-2">
-                                    <div class="grid grid-cols-3 gap-2">
+
+                                <div
+                                    class="grid gap-4 md:grid-cols-[240px_1fr]"
+                                >
+                                    <ul
+                                        class="flex flex-col gap-2 text-left text-sm"
+                                    >
+                                        <li
+                                            v-for="(step, index) in buildSteps"
+                                            :key="step.title"
+                                            :class="[
+                                                'flex items-center gap-3 rounded-lg border px-3 py-2 transition-all duration-500',
+                                                index < completedSteps
+                                                    ? 'border-border bg-card'
+                                                    : index === completedSteps
+                                                      ? 'border-foreground/30 bg-muted'
+                                                      : 'border-transparent opacity-40',
+                                            ]"
+                                        >
+                                            <span
+                                                class="flex size-5 shrink-0 items-center justify-center"
+                                            >
+                                                <Check
+                                                    v-if="
+                                                        index < completedSteps
+                                                    "
+                                                    class="size-4 text-green-500"
+                                                />
+                                                <LoaderCircle
+                                                    v-else-if="
+                                                        index === completedSteps
+                                                    "
+                                                    class="size-4 animate-spin"
+                                                />
+                                                <component
+                                                    :is="step.icon"
+                                                    v-else
+                                                    class="size-4"
+                                                />
+                                            </span>
+                                            {{ step.title }}
+                                        </li>
+                                    </ul>
+
+                                    <div
+                                        class="grid min-h-72 gap-2 md:grid-cols-[80px_1fr]"
+                                    >
                                         <div
-                                            v-for="index in 3"
-                                            :key="index"
-                                            class="relative h-20 overflow-hidden rounded-md border border-border transition-colors hover:border-foreground/30"
+                                            :class="[
+                                                'relative hidden overflow-hidden rounded-md border border-border transition-all duration-700 md:block',
+                                                blockClass(1),
+                                            ]"
                                         >
                                             <PlaceholderPattern />
                                         </div>
+                                        <div
+                                            class="grid grid-rows-[auto_1fr] gap-2"
+                                        >
+                                            <div class="grid grid-cols-3 gap-2">
+                                                <div
+                                                    v-for="index in 3"
+                                                    :key="index"
+                                                    :class="[
+                                                        'relative h-20 overflow-hidden rounded-md border border-border transition-all duration-700',
+                                                        blockClass(index + 1),
+                                                    ]"
+                                                >
+                                                    <PlaceholderPattern />
+                                                </div>
+                                            </div>
+                                            <div
+                                                :class="[
+                                                    'relative min-h-40 overflow-hidden rounded-md border border-border transition-all duration-700',
+                                                    blockClass(5),
+                                                ]"
+                                            >
+                                                <PlaceholderPattern />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div
-                                        class="relative h-48 overflow-hidden rounded-md border border-border"
-                                    >
-                                        <PlaceholderPattern />
-                                    </div>
+                                </div>
+
+                                <div
+                                    :class="[
+                                        'flex items-center justify-center gap-2 text-sm font-medium transition-all duration-500',
+                                        isBuildComplete
+                                            ? 'translate-y-0 opacity-100'
+                                            : 'translate-y-2 opacity-0',
+                                    ]"
+                                >
+                                    <Rocket class="size-4" />
+                                    {{ trans("Your SaaS ready to launch") }}
                                 </div>
                             </div>
                         </div>
