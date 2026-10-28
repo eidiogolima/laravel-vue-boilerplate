@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { Link, usePage } from '@inertiajs/vue3';
-import { ArrowLeft, Bug, Users } from '@lucide/vue';
-import { computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
+import { ArrowLeft } from '@lucide/vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavAppearance from '@/components/NavAppearance.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -16,28 +15,12 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { useAdminNavigation } from '@/composables/useAppNavigation';
 import { trans } from '@/lib/translation';
 import { dashboard } from '@/routes';
 import { dashboard as adminDashboard } from '@/routes/admin';
-import { index as errorLogsIndex } from '@/routes/admin/error-logs';
-import { index as usersIndex } from '@/routes/admin/users';
-import type { NavItem } from '@/types';
 
-const page = usePage();
-
-const administrationNavItems = computed((): NavItem[] => [
-    {
-        title: 'Users',
-        href: usersIndex(),
-        icon: Users,
-    },
-    {
-        title: 'Error logs',
-        href: errorLogsIndex(),
-        icon: Bug,
-        badge: page.props.openErrorLogsCount,
-    },
-]);
+const administrationNavItems = useAdminNavigation();
 </script>
 
 <template>

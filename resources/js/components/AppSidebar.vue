@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { Bell, Blocks, LayoutGrid, ShieldCheck } from '@lucide/vue';
-import { computed } from 'vue';
+import { ShieldCheck } from '@lucide/vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavAppearance from '@/components/NavAppearance.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -15,31 +14,14 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { components, dashboard } from '@/routes';
+import { useMainNavigation } from '@/composables/useAppNavigation';
+import { dashboard } from '@/routes';
 import { dashboard as adminDashboard } from '@/routes/admin';
-import { index as notificationsIndex } from '@/routes/notifications';
 import type { NavItem } from '@/types';
 
 const page = usePage();
 
-const mainNavItems = computed<NavItem[]>(() => [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Components',
-        href: components(),
-        icon: Blocks,
-    },
-    {
-        title: 'Notifications',
-        href: notificationsIndex(),
-        icon: Bell,
-        badge: page.props.unreadNotificationsCount,
-    },
-]);
+const mainNavItems = useMainNavigation();
 
 const administrationNavItems: NavItem[] = [
     {

@@ -544,5 +544,6 @@
     ":count occurrence(s) of the same error (same exception, file and line). Last one on :date.": ":count ocorrência(s) do mesmo erro (mesma exceção, arquivo e linha). Última em :date.",
     "This error only happened once.": "Este erro só aconteceu uma vez.",
     "Unresolved": "Em aberto",
-    "All errors": "Todos"
+    "All errors": "Todos",
+    "Navigation": "Navegação"
 }

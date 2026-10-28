@@ -403,5 +403,6 @@
     "Service Unavailable": "Servicio no disponible",
     "Too Many Requests": "Demasiadas solicitudes",
     "Unauthorized": "No autorizado",
-    "Whoops! Something went wrong.": "¡Vaya! Algo salió mal."
+    "Whoops! Something went wrong.": "¡Vaya! Algo salió mal.",
+    "Navigation": "Navegación"
 }
