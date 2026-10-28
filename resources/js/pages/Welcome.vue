@@ -553,25 +553,70 @@ const frequentlyAskedQuestions = [
             </section>
         </main>
 
-        <footer class="border-t border-border">
+        <footer class="relative overflow-hidden border-t border-border">
             <div
-                class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-muted-foreground md:flex-row"
-            >
-                <div class="flex items-center gap-2">
-                    <AppLogoIcon class="size-5 fill-current" />
-                    <span>© {{ currentYear }} {{ appName }}.</span>
-                    <span>{{ trans("All rights reserved.") }}</span>
+                class="absolute -bottom-32 left-1/2 -z-10 h-64 w-[40rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-500/10 via-sky-500/10 to-emerald-500/5 blur-3xl"
+            />
+            <div class="mx-auto flex max-w-6xl flex-col gap-10 px-6 pt-14 pb-8">
+                <div class="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
+                    <div class="flex flex-col gap-4">
+                        <Link
+                            :href="home()"
+                            class="flex w-fit items-center gap-2 font-semibold"
+                        >
+                            <AppLogoIcon class="size-7 fill-current" />
+                            {{ appName }}
+                        </Link>
+                        <p class="max-w-xs text-sm text-muted-foreground">
+                            {{ trans("Launch your SaaS faster") }}
+                        </p>
+                    </div>
+
+                    <nav class="flex flex-col gap-3 text-sm">
+                        <a
+                            v-for="navigationLink in navigationLinks"
+                            :key="navigationLink.href"
+                            :href="navigationLink.href"
+                            class="w-fit text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                            {{ navigationLink.label }}
+                        </a>
+                    </nav>
+
+                    <nav class="flex flex-col gap-3 text-sm">
+                        <Link
+                            v-if="isAuthenticated"
+                            :href="dashboard()"
+                            class="w-fit text-muted-foreground transition-colors hover:text-foreground"
+                        >
+                            {{ trans("Dashboard") }}
+                        </Link>
+                        <template v-else>
+                            <Link
+                                :href="login()"
+                                class="w-fit text-muted-foreground transition-colors hover:text-foreground"
+                            >
+                                {{ trans("Log in") }}
+                            </Link>
+                            <Link
+                                :href="register()"
+                                class="w-fit text-muted-foreground transition-colors hover:text-foreground"
+                            >
+                                {{ trans("Get started") }}
+                            </Link>
+                        </template>
+                    </nav>
                 </div>
-                <nav class="flex gap-6">
-                    <a
-                        v-for="navigationLink in navigationLinks"
-                        :key="navigationLink.href"
-                        :href="navigationLink.href"
-                        class="transition-colors hover:text-foreground"
-                    >
-                        {{ navigationLink.label }}
-                    </a>
-                </nav>
+
+                <div
+                    class="flex flex-col items-center justify-between gap-4 border-t border-border pt-6 text-sm text-muted-foreground sm:flex-row"
+                >
+                    <p>
+                        © {{ currentYear }} {{ appName }}.
+                        {{ trans("All rights reserved.") }}
+                    </p>
+                    <LocaleSwitcher />
+                </div>
             </div>
         </footer>
     </div>
