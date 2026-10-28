@@ -42,7 +42,7 @@ O `composer setup` instala as dependências, cria o `.env`, gera a chave da apli
 
 ## Convenções
 
-Todas as convenções são obrigatórias e estão descritas no [CLAUDE.md](../../CLAUDE.md). Em resumo:
+Todas as convenções são obrigatórias e estão descritas no [guia de contribuição](../../CONTRIBUTING.md#conventions), em inglês (e no `CLAUDE.md`, para agentes de IA). Em resumo:
 
 - Código em inglês. Português só é permitido em textos exibidos ao usuário, armazenados em `lang/{en,es,pt_BR}/messages.php` e `lang/{en,es,pt_BR}/errors.php`, sempre nos três idiomas.
 - A lógica de negócio fica em Actions com uma única responsabilidade. Services são apenas para integrações externas. Controllers não têm lógica de negócio.
@@ -55,6 +55,14 @@ Todas as convenções são obrigatórias e estão descritas no [CLAUDE.md](../..
 1. Copie ou clone este boilerplate.
 2. Renomeie o pacote no `composer.json` e defina o `APP_NAME` no `.env`.
 3. Substitua este README pela documentação do seu projeto.
+
+## Contribuindo
+
+Contribuições são bem-vindas! Leia o [guia de contribuição](../../CONTRIBUTING.md) e o [código de conduta](../../CODE_OF_CONDUCT.md) antes de abrir uma issue ou pull request. Para reportar uma vulnerabilidade, siga a [política de segurança](../../SECURITY.md). Esses documentos estão em inglês.
+
+## Licença
+
+Este projeto é software open source licenciado sob a [Licença MIT](../../LICENSE).
 
 ## Créditos
 

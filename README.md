@@ -42,7 +42,7 @@ composer dev
 
 ## Conventions
 
-All conventions are mandatory and described in [CLAUDE.md](CLAUDE.md). In short:
+All conventions are mandatory and described in the [Contributing Guide](CONTRIBUTING.md#conventions) (and in `CLAUDE.md` for AI agents). In short:
 
 - Code in English. Portuguese is only allowed in user-facing text, stored in `lang/{en,es,pt_BR}/messages.php` and `lang/{en,es,pt_BR}/errors.php`, always in all three languages.
 - Business logic lives in single-purpose Actions. Services are only for external integrations. Controllers have no business logic.
@@ -55,6 +55,14 @@ All conventions are mandatory and described in [CLAUDE.md](CLAUDE.md). In short:
 1. Copy or clone this boilerplate.
 2. Rename the package in `composer.json` and set `APP_NAME` in `.env`.
 3. Replace this README with your project's documentation.
+
+## Contributing
+
+Contributions are welcome! Please read the [Contributing Guide](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md) before opening an issue or pull request. To report a vulnerability, follow the [Security Policy](SECURITY.md).
+
+## License
+
+This project is open source software licensed under the [MIT License](LICENSE).
 
 ## Credits
 
