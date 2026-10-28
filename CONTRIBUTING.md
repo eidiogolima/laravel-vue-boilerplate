@@ -37,9 +37,9 @@ These rules are mandatory.
 
 - All code, commit messages and documentation are written in **English**: classes, methods, variables, routes, tables and columns.
 - User-facing text is never hardcoded. It lives in translation files and must be added to **every supported locale** (`en`, `es` and `pt_BR`):
-  - `lang/{locale}/messages.php` for success and informational messages.
-  - `lang/{locale}/errors.php` for custom error messages.
-  - `lang/{locale}.json` for frontend texts, keyed by the English text passed to `trans()`.
+    - `lang/{locale}/messages.php` for success and informational messages.
+    - `lang/{locale}/errors.php` for custom error messages.
+    - `lang/{locale}.json` for frontend texts, keyed by the English text passed to `trans()`.
 - Reference messages through translation keys, such as `__('messages.user.created')`.
 
 ### Architecture
