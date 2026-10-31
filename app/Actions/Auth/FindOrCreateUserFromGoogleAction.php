@@ -25,6 +25,10 @@ class FindOrCreateUserFromGoogleAction
                 'password' => Str::password(32),
             ]);
 
+        if ($user->exists && $user->email_verified_at === null) {
+            $user->password = Str::password(32);
+        }
+
         $user->forceFill([
             'google_id' => $googleUser->getId(),
             'avatar' => $googleUser->getAvatar() ?? $user->avatar,

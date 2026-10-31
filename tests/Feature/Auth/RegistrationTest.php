@@ -25,3 +25,11 @@ test('new users can register', function () {
     $this->assertAuthenticated();
     $response->assertRedirect(route('dashboard', absolute: false));
 });
+
+test('registration attempts are rate limited per ip address', function () {
+    foreach (range(1, 20) as $attempt) {
+        $this->post(route('register.store'), []);
+    }
+
+    $this->post(route('register.store'), [])->assertTooManyRequests();
+});

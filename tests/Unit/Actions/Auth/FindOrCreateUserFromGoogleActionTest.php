@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Actions\Auth\FindOrCreateUserFromGoogleAction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Two\User as GoogleUser;
 use Tests\TestCase;
 
@@ -85,3 +86,34 @@ it('returns null when google does not confirm the email', function (array $googl
     'missing verification flag' => [['email' => 'ana@example.com']],
     'missing email' => [['email' => null, 'email_verified' => true]],
 ]);
+
+it('invalidates the password of an unverified account when linking it to google', function () {
+    $existingUser = User::factory()->unverified()->create([
+        'email' => 'ana@example.com',
+        'password' => 'attacker-chosen-password',
+    ]);
+    $googleUser = GoogleUser::fake([
+        'id' => 'google-123',
+        'email' => 'ana@example.com',
+        'email_verified' => true,
+    ]);
+
+    $user = app(FindOrCreateUserFromGoogleAction::class)->handle($googleUser);
+
+    expect($user->id)->toBe($existingUser->id)
+        ->and(Hash::check('attacker-chosen-password', $user->password))->toBeFalse()
+        ->and($user->email_verified_at)->not->toBeNull();
+});
+
+it('keeps the password of an already verified account when linking it to google', function () {
+    User::factory()->create(['email' => 'ana@example.com', 'password' => 'known-password']);
+    $googleUser = GoogleUser::fake([
+        'id' => 'google-123',
+        'email' => 'ana@example.com',
+        'email_verified' => true,
+    ]);
+
+    $user = app(FindOrCreateUserFromGoogleAction::class)->handle($googleUser);
+
+    expect(Hash::check('known-password', $user->password))->toBeTrue();
+});
