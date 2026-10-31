@@ -1,25 +1,10 @@
 FROM php:8.5.12-fpm-alpine AS base
 
-RUN apk add --no-cache \
-        libpng \
-        libjpeg-turbo \
-        libzip \
-        icu-libs \
-    && apk add --no-cache --virtual .build-deps \
-        libpng-dev \
-        libjpeg-turbo-dev \
-        libzip-dev \
-        icu-dev \
-        $PHPIZE_DEPS \
-    && docker-php-ext-configure gd --with-jpeg \
-    && docker-php-ext-install -j"$(nproc)" \
+RUN docker-php-ext-install -j"$(nproc)" \
         pdo_mysql \
-        zip \
-        gd \
         pcntl \
         bcmath \
-        intl \
-    && apk del .build-deps
+    && rm -rf /tmp/* /usr/local/lib/php/test /usr/local/php/man
 
 WORKDIR /var/www/html
 
@@ -35,11 +20,22 @@ RUN composer install \
     --no-autoloader \
     --prefer-dist
 
-COPY . .
+COPY artisan ./
+COPY app ./app
+COPY bootstrap ./bootstrap
+COPY config ./config
+COPY database ./database
+COPY routes ./routes
 
-RUN composer dump-autoload --no-dev --optimize --classmap-authoritative
+RUN composer dump-autoload --no-dev --optimize --classmap-authoritative \
+    && find vendor \( -type d \( -name tests -o -name Tests -o -name docs \) -o -type f \( -name '*.md' -o -name '*.dist' -o -name 'phpunit*' \) \) -prune -exec rm -rf {} +
 
 FROM vendor AS frontend
+
+COPY package.json package-lock.json vite.config.ts tsconfig.json components.json ./
+COPY public ./public
+COPY resources ./resources
+COPY lang ./lang
 
 COPY --from=node:22-alpine /usr/local/bin/node /usr/local/bin/node
 COPY --from=node:22-alpine /usr/local/lib/node_modules /usr/local/lib/node_modules
@@ -52,14 +48,23 @@ RUN apk add --no-cache libstdc++ \
 
 FROM base AS runtime
 
-RUN apk add --no-cache nginx supervisor curl
+RUN apk add --no-cache nginx supervisor
 
 COPY docker/prod/php.ini /usr/local/etc/php/conf.d/app.ini
 COPY docker/prod/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/prod/supervisord.conf /etc/supervisord.conf
 
-COPY --chown=www-data:www-data . .
 COPY --from=vendor --chown=www-data:www-data /var/www/html/vendor ./vendor
+COPY --chown=www-data:www-data artisan composer.json ./
+COPY --chown=www-data:www-data app ./app
+COPY --chown=www-data:www-data bootstrap ./bootstrap
+COPY --chown=www-data:www-data config ./config
+COPY --chown=www-data:www-data database ./database
+COPY --chown=www-data:www-data lang ./lang
+COPY --chown=www-data:www-data public ./public
+COPY --chown=www-data:www-data routes ./routes
+COPY --chown=www-data:www-data resources/views ./resources/views
+COPY --chown=www-data:www-data storage ./storage
 COPY --from=frontend --chown=www-data:www-data /var/www/html/public/build ./public/build
 
 RUN mkdir -p \

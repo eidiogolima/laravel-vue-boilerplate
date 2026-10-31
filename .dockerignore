@@ -21,3 +21,8 @@ database/*.sqlite
 .agents
 .idea
 .vscode
+tests
+docs
+.github
+*.md
+.phpunit.result.cache
